@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+  <title>JumiaSeller - Application</title>
+  <!-- Favicon-->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+  <link href="assets/css/my-style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="app" class="content">
+    <div class="container-fluid">
+      <template>
+        <v-app id="inspire">
+          <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp"     dark app fixed class="no-print">
+            <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+              <span class="hidden-sm-and-down">{{app.title}}</span>
+            </v-toolbar-title>
+
+            <v-spacer></v-spacer>
+          </v-app-bar>
+          <v-content>
+            <v-container fluid>
+              <template>
+                <v-stepper v-model="e1">
+                  <v-stepper-header>
+                    <v-stepper-step :complete="e1 > 1" step="1">Name of step 1</v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step :complete="e1 > 2" step="2">Name of step 2</v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step step="3">Name of step 3</v-stepper-step>
+                  </v-stepper-header>
+
+                  <v-stepper-items>
+                    <v-stepper-content step="1">
+                      <template>
+                        <v-container fluid>
+                          <v-switch v-model="has_badge" label="Avez vous un badge"></v-switch>
+                        </v-container>
+                        <v-container v-show="has_badge">
+                          <v-row>
+                            <v-col cols="12" md="4">
+                              <v-text-field v-model="selection.Id_badge" label="Votre Badge" required></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </template>
+
+                      <v-btn color="primary" @click="next(1)">
+                        Continue
+                      </v-btn>
+
+                      
+                    </v-stepper-content>
+
+                    <v-stepper-content step="2">
+                      <template>
+                        <v-container fluid> 
+                          <v-row>
+                            <v-col cols="6" sm="4" v-for="(boisson ,index) in boissons" >
+                             
+                              <v-card class="mx-auto" max-width="400" @click=select(boisson.Id,index) 
+                              v-bind:class="[boissonImgs[index].selected ? 'activeClass' : '']">
+                                  <v-img class="white--text" height="200px" contain
+                                  :src="boissonImgs[index].img">
+                                
+                                 </v-img>
+                                 <v-card-title class=" align-cntert">{{boisson.Libelle}}</v-card-title>
+                              </v-card>
+                             
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </template>
+
+                      <v-btn color="primary" @click="e1 = 3">
+                        Continue
+                      </v-btn>
+
+                      <v-btn text @click="e1 = 1">Cancel</v-btn>
+                    </v-stepper-content>
+
+                    <v-stepper-content step="3">
+                      
+                        <v-row>
+
+                          <v-col cols="4" sm="2">
+                              <v-img
+                                :src="selectedBoisson.img" 
+                              ></v-img>
+                            </v-col>
+                        </v-row>
+
+                            <v-row>
+                        <v-col md6 xs12 class="pr-4">
+                          <span>Qte Sucre</span><br>
+                          <v-slider v-model="selection.Qte_sucre" class="align-center" :max="10" :min="0" hide-details>
+                            <template v-slot:append>
+                              <v-text-field v-model="selection.Qte_sucre" class="mt-0 pt-0" hide-details single-line
+                                type="number" style="width: 60px"></v-text-field>
+                            </template>
+                          </v-slider>
+                        </v-col>
+
+                        <v-col md6 xs12 class="pr-4"></v-col>
+                        <v-container fluid>
+                          <v-switch v-model="selection.Mug" label="Mug"></v-switch>
+                        </v-container>
+                        </v-col>
+                      </v-row>
+                      <v-btn color="primary" @click="next(3)">
+                        Continue
+                      </v-btn>
+
+                      <v-btn text @click="e1 = 2">Back</v-btn>
+                    </v-stepper-content>
+                  </v-stepper-items>
+                </v-stepper>
+              </template>
+            </v-container>
+          </v-content>
+        </v-app>
+        <v-snackbar v-model="snackbar.visible" :color="snackbar.color" :multi-line="snackbar.mode === 'multi-line'"
+          :timeout="snackbar.timeout" :vertical="snackbar.mode === 'vertical'">
+          {{snackbar.text }} 
+          <v-btn dark text @click="snackbar.visible = false">
+            Fermer
+          </v-btn>
+        </v-snackbar>
+      </template>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/global.js"></script>
+
+<script src="assets/js/app.js"></script>
+
+</html>

@@ -1,0 +1,6 @@
+.activeClass{
+    box-shadow: 0px 0px 10px #2d2a2a;
+}
+.activeClass::after{
+    background-color: black;
+}
