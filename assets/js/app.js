@@ -2,11 +2,11 @@ const routes = [
   { path: "", name: "" }
 ];
 const router = new VueRouter({
-  routes, // short for `routes: routes`
+  routes, 
   mode: "history"
 });
 Vue.use(VueRouter);
-
+//declaration variables
 const vm = new Vue({
   vuetify: new Vuetify({
     iconfont: "md",
@@ -75,10 +75,13 @@ const vm = new Vue({
       this.$router.push({ name: name, params: params });
       location.reload();
     },
+
+    //recuperer tous les boissons 
     getBoissons() {
       var $this = this;
       $this.boissons = [];
       axios
+        //url de l'API REST Fonction Get All Boisson 
         .get("http://localhost/CoffeManager/api/cofe_")
         .then(response => {
           $this.boissons = response.data;
@@ -89,9 +92,11 @@ const vm = new Vue({
           $this.snackbar.text = error;
         });
     },
+    //verifier badge existant 
     checkBadge(cb) {
       var $this = this;
       axios
+        //url de l'API REST Fonction Get Badge 
         .get(
           "http://localhost/CoffeManager/api/cofe_/getbadge/" +
             this.selection.Id_badge
@@ -111,6 +116,7 @@ const vm = new Vue({
             $this.snackbar.text = error;
         });
     },
+    //Fonction de tabulation 
     next(tab) {
       var $this = this;
       switch (tab) {
@@ -137,11 +143,14 @@ const vm = new Vue({
           break;
       }
     },
+//ajout de la selection 
+
     addSelection() {
         var nbdg = 0;
         if (this.has_badge) {
             nbdg =  this.selection.Id_badge ;
         }
+        //url de l'API REST Fonction Add selection 
       var url =
         "http://localhost/CoffeManager/api/cofe_/addselection/" +
         nbdg +
@@ -174,6 +183,8 @@ const vm = new Vue({
         $this.snackbar.text = error;
     });;
     },
+
+    //selection image
     select(b_id, i) {
         this.selectedBoisson = this.boissonImgs[i];
       this.selection.Id_boisson = b_id;
@@ -182,10 +193,11 @@ const vm = new Vue({
       });
       this.boissonImgs[i].selected = true;
     },
-       
+       //recuperer derniere selection avec num badge 
      getLastSelection() {
       var $this = this;
       axios
+        //url de l'API REST Fonction Get last selection 
         .get(
           "http://localhost/CoffeManager/api/cofe_/Get_Last_selection/" +
             this.selection.Id_badge
