@@ -50,10 +50,13 @@ const vm = new Vue({
     snackbar: {
       visible: false,
       color: "error",
-      mode: "horizontal",
-      timeout: 3000,
+      mode: "horizontal",      
+      timeout: 5000,
       text: "Hello,d a snackbar"
-    }
+    },
+   
+
+   
   },
   computed: {},
   watch: {},
@@ -63,8 +66,7 @@ const vm = new Vue({
     this.getBoissons();
     document.addEventListener("keydown", event => {
       if (event.ctrlKey) {
-      }
-      // do something
+      }     
     });
   },
   mixins: [mix],
@@ -119,11 +121,12 @@ const vm = new Vue({
                 $this.getLastSelection();
                 $this.e1 = tab + 1;
               } else {
-                
+               
               }
             });
           } else {
             $this.e1 = tab + 1;
+            $this.select(1,1); // default seelection whith out badg
           }
 
           break;
@@ -153,8 +156,9 @@ const vm = new Vue({
         $this.selection = response.data;
         if ($this.selection.Id > 0) {
           if ($this.has_badge) {
-            $this.snackbar.text = "L’opération s’est bien effectuée ";
-            
+            $this.snackbar.color = "red darken-2";
+            $this.snackbar.text = "L’opération s’est bien effectuée ";     
+            $this.showAlert()       
           } else {
             $this.snackbar.text =
               "L’opération s’est bien effectuée, votre numéro de badge est :" +
@@ -179,7 +183,7 @@ const vm = new Vue({
       this.boissonImgs[i].selected = true;
     },
        
-    getLastSelection() {
+     getLastSelection() {
       var $this = this;
       axios
         .get(
@@ -187,8 +191,7 @@ const vm = new Vue({
             this.selection.Id_badge
         )
         .then(response => {
-          $this.lastSelection = response.data;
-          console.log($this.lastSelection);
+          $this.lastSelection = response.data;         
           $this.select(
             $this.lastSelection.Id_boisson - 1,
             $this.lastSelection.Id_boisson - 1
