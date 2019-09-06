@@ -166,8 +166,7 @@ const vm = new Vue({
         if ($this.selection.Id > 0) {
           if ($this.has_badge) {
             $this.snackbar.color = "red darken-2";
-            $this.snackbar.text = "L’opération s’est bien effectuée ";     
-            $this.showAlert()       
+            $this.snackbar.text = "L’opération s’est bien effectuée ";                  
           } else {
             $this.snackbar.text =
               "L’opération s’est bien effectuée, votre numéro de badge est :" +
