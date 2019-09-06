@@ -1,20 +1,12 @@
 const routes = [
-  { path: "/clients/factures/mois", name: "clients_factures_mois" }
+  { path: "", name: "" }
 ];
 const router = new VueRouter({
   routes, // short for `routes: routes`
   mode: "history"
 });
 Vue.use(VueRouter);
-// Vue.use(Vuetify, {
-//     iconfont: 'md',
-//     theme: {
-//         primary: '#22b533',
-//         secondary: '#b0bec5',
-//         accent: '#8c9eff',
-//         error: '#b71c1c'
-//     }
-// });
+
 const vm = new Vue({
   vuetify: new Vuetify({
     iconfont: "md",
@@ -54,14 +46,7 @@ const vm = new Vue({
       Qte_sucre: 2
     },
     lastSelection: {},
-    selectedBoisson:{},
-    menuItems: [
-      {
-        icon: "urls_pattern",
-        text: "Relevé factures client par mois",
-        path: { name: "clients_factures_mois", params: {} }
-      }
-    ],
+    selectedBoisson:{},  
     snackbar: {
       visible: false,
       color: "error",
@@ -115,7 +100,7 @@ const vm = new Vue({
             $this.badge_exist = true;
           } else {
             $this.snackbar.visible = true;
-            $this.snackbar.text = "vous n'avez";
+            $this.snackbar.text = "Vous n’avez encore un numéro de badge ! ";
           }
           cb();
         })
@@ -130,11 +115,11 @@ const vm = new Vue({
         case 1:
           if ($this.has_badge) {
             $this.checkBadge(function() {
-              console.log($this.badge_exist);
               if ($this.badge_exist) {
                 $this.getLastSelection();
                 $this.e1 = tab + 1;
               } else {
+                
               }
             });
           } else {
@@ -168,17 +153,17 @@ const vm = new Vue({
         $this.selection = response.data;
         if ($this.selection.Id > 0) {
           if ($this.has_badge) {
-            $this.snackbar.text = "Opération bien effectuee";
+            $this.snackbar.text = "L’opération s’est bien effectuée ";
             
           } else {
             $this.snackbar.text =
-              "Opération bien effectuee, votre badge est: " +
+              "L’opération s’est bien effectuée, votre numéro de badge est :" +
               $this.selection.Id_badge;
           }
           $this.snackbar.visible = true;
         } else {
           $this.snackbar.visible = true;
-          $this.snackbar.text = "Opération echoue";
+          $this.snackbar.text = "L’opération a échoué";
         }
       }).catch(error => {
         $this.snackbar.visible = true;
