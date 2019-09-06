@@ -23,9 +23,10 @@
     <div class="container-fluid">
       <template>
         <v-app id="inspire">
-          <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp"     dark app fixed class="no-print">
+          <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" dark app fixed class="no-print">
             <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-              <span class="hidden-sm-and-down">{{app.title}}</span>
+              <!--<span class="hidden-sm-and-down">{{app.title}}</span>-->
+              <span>{{app.title}}</span>
             </v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -34,36 +35,29 @@
             <v-container fluid>
               <template>
                 <v-stepper v-model="e1">
-                  <v-stepper-header>
-                    <v-stepper-step :complete="e1 > 1" step="1">Name of step 1</v-stepper-step>
-
+                  <v-stepper-header >
+                    <v-stepper-step :complete="e1 > 1" step="1" color="success">Identification</v-stepper-step>
                     <v-divider></v-divider>
-
-                    <v-stepper-step :complete="e1 > 2" step="2">Name of step 2</v-stepper-step>
-
+                    <v-stepper-step :complete="e1 > 2" step="2" color="success">Selection de la boisson choisie</v-stepper-step>
                     <v-divider></v-divider>
-
-                    <v-stepper-step step="3">Name of step 3</v-stepper-step>
+                    <v-stepper-step step="3" color="success">Fin </v-stepper-step>
                   </v-stepper-header>
-
                   <v-stepper-items>
-                    <v-stepper-content step="1">
+                    <v-stepper-content step="1" >
                       <template>
                         <v-container fluid>
-                          <v-switch v-model="has_badge" label="Avez vous un badge"></v-switch>
+                          <v-switch color="success" v-model="has_badge" label="Avez-vous un badge ?"></v-switch>
                         </v-container>
                         <v-container v-show="has_badge">
                           <v-row>
                             <v-col cols="12" md="4">
-                              <v-text-field v-model="selection.Id_badge" label="Votre Badge" required></v-text-field>
+                              <v-text-field v-model="selection.Id_badge" label="Votre numéro de badge SVP :" required></v-text-field>
                             </v-col>
                           </v-row>
                         </v-container>
                       </template>
 
-                      <v-btn color="primary" @click="next(1)">
-                        Continue
-                      </v-btn>
+                      <v-btn rounded color="success" @click="next(1)" class="mb-5">Suivant</v-btn>
 
                       
                     </v-stepper-content>
@@ -74,25 +68,25 @@
                           <v-row>
                             <v-col cols="6" sm="4" v-for="(boisson ,index) in boissons" >
                              
-                              <v-card class="mx-auto" max-width="400" @click=select(boisson.Id,index) 
+                              <v-card class="mx-auto" max-width="300" @click=select(boisson.Id,index) 
                               v-bind:class="[boissonImgs[index].selected ? 'activeClass' : '']">
                                   <v-img class="white--text" height="200px" contain
                                   :src="boissonImgs[index].img">
                                 
                                  </v-img>
-                                 <v-card-title class=" align-cntert">{{boisson.Libelle}}</v-card-title>
+                                 <v-card-text><p class="text-center">{{boisson.Libelle}}</p></v-card-text>
                               </v-card>
                              
                             </v-col>
                           </v-row>
                         </v-container>
                       </template>
-
-                      <v-btn color="primary" @click="e1 = 3">
-                        Continue
+                      <v-btn rounded color="success" class="mb-5" text @click="e1 = 1">Précédent</v-btn>
+                      <v-btn rounded color="success" class="mb-5" @click="e1 = 3">
+                        Suivant
                       </v-btn>
 
-                      <v-btn text @click="e1 = 1">Back</v-btn>
+                      
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
@@ -108,8 +102,8 @@
 
                             <v-row>
                         <v-col md6 xs12 class="pr-4">
-                          <span>Qte Sucre</span><br>
-                          <v-slider v-model="selection.Qte_sucre" class="align-center" :max="10" :min="0" hide-details>
+                          <span>Choisissez votre quantité de sucre :</span><br>
+                          <v-slider color="success" track-color="gray" v-model="selection.Qte_sucre" class="align-center" :max="10" :min="0" hide-details>
                             <template v-slot:append>
                               <v-text-field v-model="selection.Qte_sucre" class="mt-0 pt-0" hide-details single-line
                                 type="number" style="width: 60px"></v-text-field>
@@ -119,15 +113,12 @@
 
                         <v-col md6 xs12 class="pr-4"></v-col>
                         <v-container fluid>
-                          <v-switch v-model="selection.Mug" label="Mug"></v-switch>
+                          <v-switch color="success" v-model="selection.Mug" label="Avez-vous un Mug ?"></v-switch>
                         </v-container>
                         </v-col>
                       </v-row>
-                      <v-btn color="primary" @click="next(3)">
-                        Continue
-                      </v-btn>
-
-                      <v-btn text @click="e1 = 2">Back</v-btn>
+                      <v-btn rounded color="success" class="mb-5" text @click="e1 = 2">Précédent</v-btn>
+                      <v-btn rounded color="success" class="mb-5"  @click="next(3)">Fin</v-btn>
                     </v-stepper-content>
                   </v-stepper-items>
                 </v-stepper>

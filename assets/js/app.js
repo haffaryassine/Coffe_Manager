@@ -30,7 +30,7 @@ const vm = new Vue({
   data: {
     search: "",
     app: {
-      title: "Haffar"
+      title: "Machine à café"
     },
     menu: false,
     modal: false,
@@ -169,6 +169,7 @@ const vm = new Vue({
         if ($this.selection.Id > 0) {
           if ($this.has_badge) {
             $this.snackbar.text = "Opération bien effectuee";
+            
           } else {
             $this.snackbar.text =
               "Opération bien effectuee, votre badge est: " +
@@ -192,6 +193,7 @@ const vm = new Vue({
       });
       this.boissonImgs[i].selected = true;
     },
+       
     getLastSelection() {
       var $this = this;
       axios
