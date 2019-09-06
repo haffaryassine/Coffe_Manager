@@ -51,7 +51,7 @@ const vm = new Vue({
       visible: false,
       color: "error",
       mode: "horizontal",      
-      timeout: 5000,
+      timeout: 7000,
       text: "Hello,d a snackbar"
     },
    
